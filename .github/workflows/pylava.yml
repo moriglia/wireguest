@@ -1,0 +1,19 @@
+name : Check Python code with Pylava
+
+on:
+    push:
+        paths:
+            - '**.py'
+
+
+
+jobs:
+    pylava:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Check out repository
+              uses: actions/checkout@v2
+            - name: Install pylava
+              run: pip3 install pylava
+            - name: Check code
+              run: python3 -m pylava
