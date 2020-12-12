@@ -1,0 +1,11 @@
+**/__pycache__/
+
+db.sqlite3
+
+*.service
+
+wireguest/ldap_settings.py
+wireguest/secret_key.py
+
+*.err
+*.log

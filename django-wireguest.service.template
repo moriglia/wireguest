@@ -1,0 +1,9 @@
+[Unit]
+Description = Wireguest - Django app for client side wireguard key creation
+
+[Service]
+Restart=on-failure
+RestartSec=60
+StartLimitBurst = 10
+WorkingDirectory = WIREGUEST_WD
+ExecStart = make run

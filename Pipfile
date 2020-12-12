@@ -1,0 +1,16 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+Django = "*"
+django-auth-ldap = "*"
+django-crispy-forms = "*"
+python-ldap = "*"
+
+[dev-packages]
+pylava = "*"
+
+[requires]
+python_version = "3.8"
