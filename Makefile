@@ -26,3 +26,13 @@ install: $(SERVICE_NAME).service
 
 uninstall:
 	rm -rf $(USER_SERVICE_UNITS)/$(SERVICE_NAME).service
+
+pylava:
+	pipenv run pylava
+
+migrations:
+	$(MANAGE) makemigrations ;
+	$(MANAGE) migrate ;
+
+openshell:
+	$(MANAGE) shell ;

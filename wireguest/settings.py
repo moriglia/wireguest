@@ -88,20 +88,20 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.\
-        UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation.'
+        'UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.\
-        MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.password_validation.'
+        'MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.\
-        CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.'
+        'CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.\
-        NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.'
+        'NumericPasswordValidator',
     },
 ]
 
@@ -126,8 +126,14 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Custom authentication
-AUTHENTICATION_BACKENDS = ("django_auth_ldap.backend.LDAPBackend",)
+AUTHENTICATION_BACKENDS = (
+    "django_auth_ldap.backend.LDAPBackend",
+    "django.contrib.auth.backends.ModelBackend",
+)
 LOGIN_URL = 'login/'
 # Keep authentication server configuration private
 from .ldap_settings import AUTH_LDAP_SERVER_URI, AUTH_LDAP_BIND_DN  # noqa
 from .ldap_settings import AUTH_BIND_PASSWORD, AUTH_LDAP_USER_SEARCH  # noqa
+
+# Redirect after login:
+LOGIN_REDIRECT_URL = 'keygen-home'

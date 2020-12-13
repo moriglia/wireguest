@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+        {% if not peers %}
+        <p>No key found for user {{ username }}</p>
+        {% else %}
+        <p>Listing keys for user {{ username }}</p>
+        {% for peer in peers %}
+        <div>
+            {% if peer.name %}
+                <h3>{{ peer.name }}</h3>
+            {% endif %}
+            <p>Public Key: {{ peer.public_key }}</p>
+            <p>Address: {{ peer.address }}</p>
+            <p>Creation date: {{ peer.creation_date|date:"Y-m-d H:i:s"}}</p>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </body>
+</html>
