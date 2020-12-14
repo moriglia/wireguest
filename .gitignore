@@ -6,6 +6,7 @@ db.sqlite3
 
 wireguest/ldap_settings.py
 wireguest/secret_key.py
+keygenerator/wireguard_config.py
 
 *.err
 *.log

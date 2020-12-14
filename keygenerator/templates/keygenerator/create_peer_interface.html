@@ -1,0 +1,25 @@
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <p>Register a new interface for {{ user }}</p>
+        <form method="post">
+            {% csrf_token %}
+            <fieldset>
+                {{form|crispy}}
+            </fieldset>
+            <button type="submit" name="button">Submit name</button>
+        </form>
+    </body>
+</html>

@@ -1,5 +1,6 @@
 # WireGuest
 ![Check Python code with Pylava](https://github.com/moriglia/wireguest/workflows/Pylava/badge.svg)
+[![GitHub license](https://img.shields.io/github/license/moriglia/wireguest)](https://github.com/moriglia/wireguest/blob/master/LICENSE)
 
 A Django web application for Wireguard key generation and management.
 
