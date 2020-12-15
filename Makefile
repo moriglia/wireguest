@@ -6,7 +6,7 @@ WIREGUEST_WD ?= `pwd`
 SERVICE_NAME ?= django-wireguest
 USER_SERVICE_UNITS ?= $(HOME)/.config/systemd/user
 
-.PHONY: run
+.PHONY: run migrations pylava install uninstall clean service openshell test coverage
 
 run:
 	$(MANAGE) runserver $(PIPE_OPT)
@@ -29,6 +29,14 @@ uninstall:
 
 pylava:
 	pipenv run pylava
+
+test:
+	$(MANAGE) test
+
+coverage:
+	# Configuration is saved in .coveragerc
+	pipenv run coverage run manage.py test
+	pipenv run coverage html
 
 migrations:
 	$(MANAGE) makemigrations ;

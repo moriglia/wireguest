@@ -11,6 +11,8 @@ python-ldap = "*"
 
 [dev-packages]
 pylava = "*"
+model-mommy = "*"
+coverage = "*"
 
 [requires]
 python_version = "3.8"

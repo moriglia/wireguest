@@ -1,0 +1,3 @@
+[run]
+source=keygenerator/
+omit=keygenerator/migrations/*

@@ -10,3 +10,7 @@ keygenerator/wireguard_config.py
 
 *.err
 *.log
+
+# Coverage (but keep .coveragerc)
+.coverage
+htmlcov/
