@@ -1,5 +1,7 @@
 # WireGuest
 ![Check Python code with Pylava](https://github.com/moriglia/wireguest/workflows/Pylava/badge.svg)
+![Unittest](https://github.com/moriglia/wireguest/workflows/Unittest/badge.svg)
+[![codecov](https://codecov.io/gh/moriglia/wireguest/branch/master/graph/badge.svg)](https://codecov.io/gh/moriglia/wireguest)
 [![GitHub license](https://img.shields.io/github/license/moriglia/wireguest)](https://github.com/moriglia/wireguest/blob/master/LICENSE)
 
 A Django web application for Wireguard key generation and management.
@@ -11,8 +13,17 @@ the public keys from the user.
 
 ## Usage
 
+In all the following methods substitute
+`make config` with `make CONFIGURATION_HEADERS=production config`
+after reading `config_headers/README.md` when working
+with a custom configuration
+
 ### Just run
 ```bash
+# Only the first time:
+make config ;
+
+# then:
 python3 manage.py runserver
 ```
 
@@ -20,6 +31,7 @@ python3 manage.py runserver
 ```bash
 # Only the first time:
 pipenv install ;
+make config ;
 
 # then:
 pipenv run python manage.py runserver
@@ -29,6 +41,7 @@ pipenv run python manage.py runserver
 ```bash
 # Only the first time:
 pipenv install ;
+make config ;
 
 # then:
 make run
@@ -37,6 +50,7 @@ make run
 ### Install as user service
 ```bash
 # Pipenv environment creation and service configuration
+make config ;
 make install ;
 
 # start service

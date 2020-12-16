@@ -4,9 +4,11 @@ db.sqlite3
 
 *.service
 
+# Application specific configurations
 wireguest/ldap_settings.py
 wireguest/secret_key.py
 keygenerator/wireguard_config.py
+config_headers/production/*.h
 
 *.err
 *.log
@@ -14,3 +16,4 @@ keygenerator/wireguard_config.py
 # Coverage (but keep .coveragerc)
 .coverage
 htmlcov/
+coverage.xml

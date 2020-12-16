@@ -6,7 +6,10 @@ WIREGUEST_WD ?= `pwd`
 SERVICE_NAME ?= django-wireguest
 USER_SERVICE_UNITS ?= $(HOME)/.config/systemd/user
 
-.PHONY: run migrations pylava install uninstall clean service openshell test coverage
+CONFIGURATION_HEADERS ?= test
+CONFIGURABLE_FILES = keygenerator/wireguard_config.py
+
+.PHONY: run migrations pylava install uninstall clean service openshell test coverage config
 
 run:
 	$(MANAGE) runserver $(PIPE_OPT)
@@ -17,7 +20,13 @@ run:
 service: $(SERVICE_NAME).service
 
 clean:
-	rm -rf $(SERVICE_NAME).service $(LOG_FILE) $(ERR_FILE)
+	rm -rf $(SERVICE_NAME).service $(LOG_FILE) $(ERR_FILE) $(CONFIGURABLE_FILES)
+
+# See config_headers/README.md for more information
+%.py: %.py.cpp
+	cpp -P -nostdinc -I config_headers/$(CONFIGURATION_HEADERS) $< -o $@
+
+config: $(CONFIGURABLE_FILES)
 
 install: $(SERVICE_NAME).service
 	pipenv install ;
@@ -30,10 +39,10 @@ uninstall:
 pylava:
 	pipenv run pylava
 
-test:
+test: config
 	$(MANAGE) test
 
-coverage:
+coverage: config
 	# Configuration is saved in .coveragerc
 	pipenv run coverage run manage.py test
 	pipenv run coverage html

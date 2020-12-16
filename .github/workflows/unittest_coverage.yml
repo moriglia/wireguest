@@ -1,0 +1,31 @@
+name : Unittest
+
+on:
+    push:
+        paths:
+            - '**.py'
+            - '!*/migrations/**.py'
+
+
+
+jobs:
+    pylava:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Check out repository
+              uses: actions/checkout@master
+            - name: Install required packages
+              run: pipenv install
+            - name: Setup Test Configuration
+              run: make CONFIGURATION_HEADERS=test configure
+            - name: Run tests with coverage analysis
+              run: pipenv run coverage run manage.py test
+            - name: Produce coverage report
+              run: pipenv run coverage xml
+            - name: Upload coverage to Codecov
+              uses: codecov/codecov-action@v1
+              with:
+                  token: ${{ secrets.CODECOV_TOKEN }}
+                  file: ./coverage.xml
+                  flags: unittests
+                  verbose: true

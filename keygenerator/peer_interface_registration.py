@@ -42,7 +42,7 @@ def registrate_interface(user, interface_name):
         try:
             p.save()
 
-            # Exit if successfully saved a UNIIQUE ip address
+            # Exit if successfully saved a UNIQUE ip address
             return ip
         except IntegrityError:
             # Try the next ip in the pool if there already was the selected ip
