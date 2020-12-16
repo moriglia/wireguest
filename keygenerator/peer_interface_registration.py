@@ -1,7 +1,8 @@
 from ipaddress import IPv4Address
 from .wireguard_config import CLIENT_POOL_FIRST, CLIENT_POOL_LAST
 from .models import Peer
-from django.db.utils import IntegrityError
+from django.db.utils import DatabaseError
+from django.db import transaction
 
 
 def get_next_ip_from_pool(ip):
@@ -40,11 +41,12 @@ def registrate_interface(user, interface_name):
         # Try to save the new peer interface
         p = Peer(name=interface_name, user=user, address=ip)
         try:
-            p.save()
+            with transaction.atomic():
+                p.save()
 
             # Exit if successfully saved a UNIQUE ip address
             return ip
-        except IntegrityError:
+        except DatabaseError:
             # Try the next ip in the pool if there already was the selected ip
             # in the Peer interface table
             ip = get_next_ip_from_pool(ip)
