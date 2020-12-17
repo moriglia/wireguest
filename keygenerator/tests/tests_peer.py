@@ -2,12 +2,12 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from model_mommy import mommy
 from ipaddress import IPv4Address, IPv4Network
-from . import wireguard_config as wgc
+from .. import wireguard_config as wgc
 
 
 # Classes and function to test
-from .models import Peer
-from .peer_interface_registration import get_next_ip_from_pool, \
+from ..models import Peer
+from ..peer_interface_registration import get_next_ip_from_pool, \
     registrate_interface
 
 
