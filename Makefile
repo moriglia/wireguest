@@ -7,7 +7,7 @@ SERVICE_NAME ?= django-wireguest
 USER_SERVICE_UNITS ?= $(HOME)/.config/systemd/user
 
 CONFIGURATION_HEADERS ?= test
-CONFIGURABLE_FILES = keygenerator/wireguard_config.py
+CONFIGURABLE_FILES = keygenerator/wireguard_config.py wireguest/ldap_settings.py
 
 .PHONY: run migrations pylava install uninstall clean service openshell test coverage config
 

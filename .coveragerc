@@ -8,3 +8,6 @@ omit=
 
     # Ignore all example files
     *example*
+
+    # Init files are mostly empty
+    *__init__.py
