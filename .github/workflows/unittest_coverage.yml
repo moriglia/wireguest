@@ -16,6 +16,8 @@ jobs:
               uses: actions/checkout@master
             - name: Setup Test Configuration
               run: make CONFIGURATION_HEADERS=test config
+            - name: Install python-ldap requirements
+              run: apt-get install libsasl2-dev python-dev libldap2-dev libssl-dev
             - name: Install required packages
               uses: VaultVulp/action-pipenv@v2.0.1
               with:
