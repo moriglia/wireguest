@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: GPLv3-or-later
+# Copyright (C) 2020 Marco Origlia
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Peer

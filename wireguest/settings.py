@@ -25,7 +25,7 @@ from .secret_key import SECRET_KEY  # noqa
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['testserver', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -130,7 +130,7 @@ AUTHENTICATION_BACKENDS = (
     "django_auth_ldap.backend.LDAPBackend",
     "django.contrib.auth.backends.ModelBackend",
 )
-LOGIN_URL = 'login/'
+LOGIN_URL = '/login/'
 # Keep authentication server configuration private
 from .ldap_settings import AUTH_LDAP_SERVER_URI, AUTH_LDAP_BIND_DN  # noqa
 from .ldap_settings import AUTH_BIND_PASSWORD, AUTH_LDAP_USER_SEARCH  # noqa

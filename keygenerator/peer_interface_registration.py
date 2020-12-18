@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: GPLv3-or-later
+# Copyright (C) 2020 Marco Origlia
+
 from ipaddress import IPv4Address
 from .wireguard_config import CLIENT_POOL_FIRST, CLIENT_POOL_LAST
 from .models import Peer

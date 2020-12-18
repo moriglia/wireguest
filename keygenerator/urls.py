@@ -13,7 +13,7 @@ urlpatterns = [
     path(
         'logout/',
         auth_views.LogoutView.as_view(next_page='keygen-home'),
-        name='login'
+        name='logout'
     ),
     path('create/', views.create_peer_interface, name='keygen-create'),
 ]
