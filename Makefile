@@ -7,7 +7,8 @@ SERVICE_NAME ?= django-wireguest
 USER_SERVICE_UNITS ?= $(HOME)/.config/systemd/user
 
 CONFIGURATION_HEADERS ?= test
-CONFIGURABLE_FILES = keygenerator/wireguard_config.py wireguest/ldap_settings.py
+
+CONFIGURABLE_FILES = $(subst .cpp.,.,$(shell find . -name "*.cpp.*"))
 
 .PHONY: run migrations pylava install uninstall clean service openshell test coverage config
 
@@ -22,9 +23,15 @@ service: $(SERVICE_NAME).service
 clean:
 	rm -rf $(SERVICE_NAME).service $(LOG_FILE) $(ERR_FILE) $(CONFIGURABLE_FILES)
 
-# See config_headers/README.md for more information
-%.py: %.py.cpp
-	cpp -P -nostdinc -I config_headers/$(CONFIGURATION_HEADERS) $< -o $@
+# See config_headers/README.md for more information about the configuration headers
+# The following receipe is used for both python and js files
+PREPROCESS = cpp -P -nostdinc -I config_headers/$(CONFIGURATION_HEADERS) $< -o $@
+
+%.py: %.cpp.py
+	$(PREPROCESS)
+
+%.js: %.cpp.js
+	$(PREPROCESS)
 
 config: $(CONFIGURABLE_FILES)
 
