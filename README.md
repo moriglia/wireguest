@@ -73,3 +73,7 @@ systemctl start django-wireguest ;
 If you use `pipenv` you may need to install:
 * `libsasl2-dev`
 * `libldap2-dev`
+
+## Credits
+* [Riccardo Mancini](https://github.com/manciukic) for his precious suggestions
+    about cryptography

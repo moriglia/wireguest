@@ -11,7 +11,7 @@ class Peer(models.Model):
     name = models.CharField(max_length=16)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     address = IPv4AddressField(unique=True)
-    public_key = models.CharField(max_length=44)
+    public_key = models.CharField(max_length=44, unique=True)
     creation_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):

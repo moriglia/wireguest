@@ -47,7 +47,7 @@ coverage: config
 	pipenv run coverage run manage.py test
 	pipenv run coverage html
 
-migrations:
+migrations: config
 	$(MANAGE) makemigrations ;
 	$(MANAGE) migrate ;
 

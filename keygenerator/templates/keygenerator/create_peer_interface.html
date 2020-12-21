@@ -1,4 +1,5 @@
 {% load crispy_forms_tags %}
+{% load static %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,7 +20,13 @@
             <fieldset>
                 {{form|crispy}}
             </fieldset>
-            <button type="submit" name="button">Submit name</button>
+            <button id="submit_button" type="submit" name="button_s">Submit</button>
+
         </form>
+        <button id="generate_submit_button" name="button_gs">Generate and submit</button>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/CryptoEsel/js-x25519/x25519.js"></script>
+        <script src="{% static 'js/key_generator.js' %}"></script>
     </body>
 </html>

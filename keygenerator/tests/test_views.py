@@ -2,6 +2,7 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth.models import User
 from model_mommy import mommy
+from .utils import randomKey
 
 from ..models import Peer
 from ..peer_interface_registration import (
@@ -54,11 +55,14 @@ class Test_080_CreateView(TestCase):
         self.keys = []
         self.num_interfaces = 20
 
-    def submit_key(self, interface_name):
+    def submit_key(self, interface_name, interface_key=None):
+        if interface_key is None:
+            interface_key = randomKey()
         return self.c.post(
             reverse('keygen-create'),
             {
-                "interface_name": interface_name
+                "interface_name": interface_name,
+                "interface_public_key": interface_key
             } if interface_name else None
         )
 
@@ -87,9 +91,12 @@ class Test_080_CreateView(TestCase):
         for k in range(self.num_interfaces):
             interface_names.append(f"wg{k}")
             r = self.submit_key(interface_names[-1])
-            self.assertEqual(r.status_code, 302)
-            self.assertTrue(hasattr(r, 'url'))
-            self.assertEqual(reverse('keygen-home'), r.url)
+            self.assertEqual(r.status_code, 200)
+
+            # The viw does not immediately redirect to the home page any more
+            # self.assertEqual(r.status_code, 302)
+            # self.assertTrue(hasattr(r, 'url'))
+            # self.assertEqual(reverse('keygen-home'), r.url)
 
         # Check registered interfaces in home view
         r = self.c.get(reverse('keygen-home'))
@@ -113,20 +120,32 @@ class Test_080_CreateView(TestCase):
             self.assertEqual(r.status_code, 200)
             self.assertEqual(len(r.context['messages']), 1)
             for message in r.context['messages']:
-                self.assertEqual(str(message), "Invalid name for interface")
+                self.assertEqual(str(message), "Invalid interface data")
+
+        # invalid_public_keys
+        invalid_public_keys = [3, "ll", [0, 2, 'a'], (0, 1, 2, 3), True]
+        for invalid_key in invalid_public_keys:
+            r = self.submit_key("Valid Name but...", invalid_key)
+            self.assertEqual(r.status_code, 200)
+            self.assertEqual(len(r.context['messages']), 1)
+            for message in r.context['messages']:
+                self.assertEqual(str(message), "Invalid interface data")
 
     def test_40_full_pool(self):
         # Fill pool with interfaces
         k = 0
-        while registrate_interface(self.u, f"wg{k}-self.u.username"):
+        while registrate_interface(
+            self.u,
+            f"wg{k}-self.u.username",
+            randomKey()
+        ):
             k += 1
             pass
 
         self.c.force_login(self.u)
 
         r = self.submit_key("Any-Name")
-        self.assertEqual(r.status_code, 302)
-        self.assertEqual(r.url, reverse('keygen-home'))
+        self.assertEqual(r.status_code, 200)
 
         # self.assertEqual(len(r.context['messages']), 1)
         # for message in r.context['messages']:

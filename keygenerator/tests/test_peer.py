@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from model_mommy import mommy
 from ipaddress import IPv4Address, IPv4Network
 from .. import wireguard_config as wgc
-
+from .utils import randomKey
 
 # Classes and function to test
 from ..models import Peer
@@ -30,7 +30,7 @@ class Test_050_Peer(TestCase):
                     name=f"{users[-1].username}_{i}",
                     user=users[-1],
                     address=addr[-1],
-                    public_key=""  # Rimember to implement test
+                    public_key=randomKey()
                 )
             )
             peers[-1].save()
@@ -89,7 +89,7 @@ class Test_060_PeerInterfaceRegistration(TestCase):
     def test_20_registrate_interface(self):
         u = mommy.make(User)
 
-        ip = registrate_interface(u, "First Interface")
+        ip = registrate_interface(u, "First Interface", randomKey())
 
         p = Peer.objects.first()
 
@@ -105,7 +105,7 @@ class Test_060_PeerInterfaceRegistration(TestCase):
             last_interface_address = Peer.maxip() + 1
             self.assertEqual(
                 last_interface_address,
-                registrate_interface(u, "Generic Name")
+                registrate_interface(u, "Generic Name", randomKey())
             )
             self.assertEqual(
                 Peer.objects.last().address,
@@ -121,16 +121,19 @@ class Test_060_PeerInterfaceRegistration(TestCase):
         # the function should loop and restart searching for an available ip
         # starting from the first address of the pool
         self.assertEqual(
-            registrate_interface(u, "Another one"),
+            registrate_interface(u, "Another one", randomKey()),
             last_interface_address + 1
         )
 
         # Fill all remaining interfaces in the pool
-        while registrate_interface(u, "Filling") != wgc.CLIENT_POOL_LAST - 1:
+        while registrate_interface(u, "Filling", randomKey()) != \
+                wgc.CLIENT_POOL_LAST - 1:
             pass
 
         # The next interface will not be inserted because pool is completely
         # allocated
-        self.assertIsNone(registrate_interface(u, "NOT_IN_DATABASE"))
+        self.assertIsNone(
+            registrate_interface(u, "NOT_IN_DATABASE", randomKey())
+        )
         query = Peer.objects.filter(name="NOT_IN_DATABASE")
         self.assertEqual(query.count(), 0)

@@ -28,7 +28,7 @@ def get_next_ip_from_pool(ip):
     return ip
 
 
-def registrate_interface(user, interface_name):
+def registrate_interface(user, interface_name, interface_public_key):
     preceding_ip = Peer.maxip()
 
     if preceding_ip is None:
@@ -42,7 +42,12 @@ def registrate_interface(user, interface_name):
         # a complete visit of the pool
 
         # Try to save the new peer interface
-        p = Peer(name=interface_name, user=user, address=ip)
+        p = Peer(
+            name=interface_name,
+            user=user,
+            address=ip,
+            public_key=interface_public_key
+        )
         try:
             with transaction.atomic():
                 p.save()
