@@ -6,11 +6,12 @@
 
 #define WIREGUARD_INTERFACE_ADDRESS "10.0.2.1"
 #define WIREGUARD_INTERFACE_PORT 9876
-#define WIREGUARD_SERVER_PUBLIC_KEY GenerateAProperKeyToUseAsAWireguardEndpoint=
-#define WIREGUARD_ENDPOINT vpn.mydomain.com
+#define WIREGUARD_SERVER_PUBLIC_KEY "GenerateAProperKeyToUseAsAWireguardEndpoint="
+#define WIREGUARD_ENDPOINT "vpn.mydomain.com"
 
 #define WIREGUARD_POOL_FIRST "10.0.2.2"
 #define WIREGUARD_POOL_LAST "10.0.2.62"
+#define WIREGUARD_DEFAULT_CLIENT_PORT 9876
 #define WIREGUARD_NETWORK_MASK_SHORT 26
 
 

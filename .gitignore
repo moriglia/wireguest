@@ -8,6 +8,7 @@ db.sqlite3
 wireguest/ldap_settings.py
 wireguest/secret_key.py
 keygenerator/wireguard_config.py
+keygenerator/static/js/key_generator.js
 config_headers/production/*.h
 
 *.err

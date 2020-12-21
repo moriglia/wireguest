@@ -6,6 +6,7 @@
  * <script src="https://cdn.jsdelivr.net/gh/CryptoEsel/js-x25519/x25519.js"></script>
  * His module is distributed under the MIT license
  */
+#include <wireguard.h>
 
 function generatePrivateKey() {
     const bytes_number = 32;
@@ -29,17 +30,16 @@ function getPublicKey(privateKeyBytes){
 }
 
 function createConfigurationFile(interface_name, interface_address, privateKeyBytes){
-    var config_text = "[Interface]\n\
-# The public key is: " + getPublicKey(privateKeyBytes) + "\n\
-PrivateKey = " + getPrivateKey(privateKeyBytes) + "\n\
-ListenPort = TO_CONFIGURE\n\
-Address = " + interface_address + "\n\
-\n\
-[Peer]\n\
-PublicKey = WIREGUARD_SERVER_PUBLIC_KEY\n\
-Endpoint = WIREGUARD_ENDPOINT:WIREGUARD_INTERFACE_PORT\n\
-AllowedIPs = 0.0.0.0/0\n\
-"
+    var config_text = "[Interface]\n"
+        + "# The public key is: " + getPublicKey(privateKeyBytes) + "\n"
+        + "PrivateKey = " + getPrivateKey(privateKeyBytes) + "\n"
+        + "ListenPort = " + WIREGUARD_DEFAULT_CLIENT_PORT + "\n"
+        + "Address = " + interface_address + "/" + WIREGUARD_NETWORK_MASK_SHORT + "\n"
+        + "\n"
+        + "[Peer]\n"
+        + "PublicKey = " + WIREGUARD_SERVER_PUBLIC_KEY + "\n"
+        + "Endpoint = " + WIREGUARD_ENDPOINT + ":" + WIREGUARD_INTERFACE_PORT + "\n"
+        + "AllowedIPs = 0.0.0.0/0\n";
     var b = new Blob([config_text], {type: "text/plain;charset=UTF-8"});
     var dummy_node = document.createElement('a');
     document.body.appendChild(dummy_node);

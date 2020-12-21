@@ -1,32 +1,26 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-        <title>{{username}} - Public Keys</title>
-    </head>
-    <body>
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
-        {% if not peers %}
+{% extends 'keygenerator/base.html' %}
+
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% if not peers %}
         <p>No key found for user {{ username }}</p>
-        {% else %}
+    {% else %}
         <p>Listing keys for user {{ username }}</p>
         {% for peer in peers %}
-        <div>
-            {% if peer.name %}
-                <h3>{{ peer.name }}</h3>
-            {% endif %}
-            <p>Public Key: {{ peer.public_key }}</p>
-            <p>Address: {{ peer.address }}</p>
-            <p>Creation date: {{ peer.creation_date|date:"Y-m-d H:i:s"}}</p>
-        </div>
+            <div>
+                {% if peer.name %}
+                    <h3>{{ peer.name }}</h3>
+                {% endif %}
+                <p>Public Key: {{ peer.public_key }}</p>
+                <p>Address: {{ peer.address }}</p>
+                <p>Creation date: {{ peer.creation_date|date:"Y-m-d H:i:s"}}</p>
+            </div>
         {% endfor %}
-        {% endif %}
-    </body>
-</html>
+    {% endif %}
+{% endblock content %}

@@ -8,12 +8,12 @@ urlpatterns = [
     path(
         'login/',
         auth_views.LoginView.as_view(template_name='keygenerator/login.html'),
-        name='login'
+        name='keygen-login'
     ),
     path(
         'logout/',
         auth_views.LogoutView.as_view(next_page='keygen-home'),
-        name='logout'
+        name='keygen-logout'
     ),
     path('create/', views.create_peer_interface, name='keygen-create'),
 ]

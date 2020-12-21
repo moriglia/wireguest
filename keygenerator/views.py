@@ -14,7 +14,8 @@ from django.contrib import messages
 def home(request):
     context = {
         'peers': Peer.objects.filter(user=request.user),
-        'username': request.user.username
+        'username': request.user.username,
+        'title' : "WireGuest Home"
     }
     return render(request, 'keygenerator/user_keys.html', context)
 
@@ -78,6 +79,7 @@ def create_peer_interface(request):
         'keygenerator/create_peer_interface.html',
         {
             'form': form,
-            'user': request.user.username
+            'user': request.user.username,
+            'title': "Create Interface"
         }
     )
