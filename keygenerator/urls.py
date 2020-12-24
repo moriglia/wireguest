@@ -16,4 +16,14 @@ urlpatterns = [
         name='keygen-logout'
     ),
     path('create/', views.create_peer_interface, name='keygen-create'),
+    path(
+        'peer/<int:pk>/edit',
+        views.edit_interface,
+        name='keygen-edit'
+    ),
+    path(
+        'peer/<int:pk>/delete',
+        views.PeerInterfaceDeleteView.as_view(),
+        name='keygen-delete'
+    ),
 ]

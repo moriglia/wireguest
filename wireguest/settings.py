@@ -137,3 +137,6 @@ from .ldap_settings import AUTH_BIND_PASSWORD, AUTH_LDAP_USER_SEARCH  # noqa
 
 # Redirect after login:
 LOGIN_REDIRECT_URL = 'keygen-home'
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

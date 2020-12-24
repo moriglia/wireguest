@@ -1,13 +1,6 @@
 {% extends 'keygenerator/base.html' %}
 
 {% block content %}
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endif %}
     {% if not peers %}
         <p>No key found for user {{ username }}</p>
     {% else %}
@@ -20,6 +13,8 @@
                 <p>Public Key: {{ peer.public_key }}</p>
                 <p>Address: {{ peer.address }}</p>
                 <p>Creation date: {{ peer.creation_date|date:"Y-m-d H:i:s"}}</p>
+                <a class="btn btn-outline-secondary" href="{% url 'keygen-edit' peer.id %}">Edit</a>
+                <a class="btn btn-outline-danger" href="{% url 'keygen-delete' peer.id %}">Delete</a>
             </div>
         {% endfor %}
     {% endif %}

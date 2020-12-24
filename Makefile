@@ -1,14 +1,17 @@
 LOG_FILE ?= wireguest.log
 ERR_FILE ?= wireguest.err
 PIPE_OPT ?= 1>> $(LOG_FILE) 2>> $(ERR_FILE)
+
 MANAGE = pipenv run python manage.py
+
 WIREGUEST_WD ?= `pwd`
 SERVICE_NAME ?= django-wireguest
 USER_SERVICE_UNITS ?= $(HOME)/.config/systemd/user
 
 CONFIGURATION_HEADERS ?= test
-
 CONFIGURABLE_FILES = $(subst .cpp.,.,$(shell find . -name "*.cpp.*"))
+
+COVERAGE_FORMAT ?= xml # Set it to html to generate htmlcov/ folder
 
 .PHONY: run migrations pylava install uninstall clean service openshell test coverage config
 
@@ -52,7 +55,7 @@ test: config
 coverage: config
 	# Configuration is saved in .coveragerc
 	pipenv run coverage run manage.py test
-	pipenv run coverage html
+	pipenv run coverage $(COVERAGE_FORMAT)
 
 migrations: config
 	$(MANAGE) makemigrations ;

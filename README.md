@@ -1,6 +1,5 @@
 # WireGuest
 ![Check Python code with Pylava](https://github.com/moriglia/wireguest/workflows/Pylava/badge.svg)
-![Unittest](https://github.com/moriglia/wireguest/workflows/Unittest/badge.svg)
 [![codecov](https://codecov.io/gh/moriglia/wireguest/branch/master/graph/badge.svg)](https://codecov.io/gh/moriglia/wireguest)
 [![GitHub license](https://img.shields.io/github/license/moriglia/wireguest)](https://github.com/moriglia/wireguest/blob/master/LICENSE)
 
