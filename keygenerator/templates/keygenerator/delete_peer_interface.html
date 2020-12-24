@@ -1,0 +1,21 @@
+{% extends 'keygenerator/base.html' %}
+{% load static %}
+
+{% block content %}
+    <p>Update interface data</p>
+    <form method="post">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Delete Peer Interface Configuration</legend>
+            <h2>Are you sure you want to delete this interface configuration?</h2>
+            {% if object.name %}
+                <h3>{{ object.name }}</h3>
+            {% endif %}
+            <p>Public Key: {{ object.public_key }}</p>
+            <p>Address: {{ object.address }}</p>
+            <p>Creation date: {{ object.creation_date|date:"Y-m-d H:i:s"}}</p>
+        </fieldset>
+        <button class="btn btn-outline-danger" id="submit_button" type="submit" name="button_s">Yes, Delete</button>
+        <a class="btn btn-outline-secondary" href="{% url 'keygen-home' %}">No, cancel</a>
+    </form>
+{% endblock content %}

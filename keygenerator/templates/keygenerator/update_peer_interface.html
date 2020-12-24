@@ -1,0 +1,16 @@
+{% extends 'keygenerator/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+    <p>Update interface data</p>
+    <form method="post">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Update Interface</legend>
+            {{form|crispy}}
+        </fieldset>
+        <button id="submit_button" type="submit" name="button_s">Submit</button>
+        <a class="btn btn-outline-secondary" href="{% url 'keygen-home' %}">Cancel editing</a>
+    </form>
+{% endblock content %}
