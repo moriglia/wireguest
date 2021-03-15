@@ -89,7 +89,7 @@ class Test_060_PeerInterfaceRegistration(TestCase):
     def test_20_registrate_interface(self):
         u = mommy.make(User)
 
-        ip = registrate_interface(u, "First Interface", randomKey())
+        new_peer = registrate_interface(u, "First Interface", randomKey())
 
         p = Peer.objects.first()
 
@@ -97,7 +97,7 @@ class Test_060_PeerInterfaceRegistration(TestCase):
         self.assertIsInstance(p, Peer)
 
         self.assertEqual(p.address, wgc.CLIENT_POOL_FIRST)
-        self.assertEqual(ip, wgc.CLIENT_POOL_FIRST)
+        self.assertEqual(new_peer.address, wgc.CLIENT_POOL_FIRST)
         self.assertEqual(p.name, "First Interface")
 
         # Assume we do not reach the end of the pool
@@ -105,7 +105,7 @@ class Test_060_PeerInterfaceRegistration(TestCase):
             last_interface_address = Peer.maxip() + 1
             self.assertEqual(
                 last_interface_address,
-                registrate_interface(u, "Generic Name", randomKey())
+                registrate_interface(u, "Generic Name", randomKey()).address
             )
             self.assertEqual(
                 Peer.objects.last().address,
@@ -121,12 +121,12 @@ class Test_060_PeerInterfaceRegistration(TestCase):
         # the function should loop and restart searching for an available ip
         # starting from the first address of the pool
         self.assertEqual(
-            registrate_interface(u, "Another one", randomKey()),
+            registrate_interface(u, "Another one", randomKey()).address,
             last_interface_address + 1
         )
 
         # Fill all remaining interfaces in the pool
-        while registrate_interface(u, "Filling", randomKey()) != \
+        while registrate_interface(u, "Filling", randomKey()).address != \
                 wgc.CLIENT_POOL_LAST - 1:
             pass
 

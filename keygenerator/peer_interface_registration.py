@@ -53,7 +53,7 @@ def registrate_interface(user, interface_name, interface_public_key):
                 p.save()
 
             # Exit if successfully saved a UNIQUE ip address
-            return ip
+            return p
         except DatabaseError:
             # Try the next ip in the pool if there already was the selected ip
             # in the Peer interface table

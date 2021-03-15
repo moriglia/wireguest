@@ -11,6 +11,7 @@ from .peer_interface_registration import registrate_interface
 from django.contrib import messages
 from django.views.generic import DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from .wg_management import wg_set_peer, wg_delete_peer
 
 
 @login_required
@@ -30,16 +31,17 @@ def create_peer_interface(request):
         if form.is_valid():
             interface_name = form.cleaned_data['interface_name']
             interface_public_key = form.cleaned_data['interface_public_key']
-            ip = registrate_interface(
+            peer = registrate_interface(
                 request.user,
                 interface_name,
                 interface_public_key
             )
-            if ip:
+            if peer:
+                wg_set_peer(peer)  # register new peer for Wireguard
                 if request.is_ajax():
                     return JsonResponse(
                         {
-                            "address": str(ip)
+                            "address": str(peer.address)
                         },
                         status=200
                     )
@@ -47,7 +49,7 @@ def create_peer_interface(request):
                     messages.success(
                         request,
                         f"Created a new interface {interface_name} "
-                        f"with ip {ip} "
+                        f"with ip {peer.address} "
                         f"for user {request.user.username}"
                     )
 
@@ -102,11 +104,13 @@ def edit_interface(request, **kwargs):
     if request.method == "POST":
         form = InterfaceForm(request.POST)
         if form.is_valid():
+            wg_delete_peer(peer.public_key)  # unregister from Wireguard
             peer.name = form.cleaned_data['interface_name']
             peer.public_key = form.cleaned_data['interface_public_key']
 
             # Update the existing key
             peer.save()
+            wg_set_peer(peer)  # re-register for Wireguard
 
             messages.success(request, "Key updated")
             return redirect('keygen-home')
